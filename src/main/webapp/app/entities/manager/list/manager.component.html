@@ -1,0 +1,116 @@
+<div>
+  <h2 id="page-heading" data-cy="ManagerHeading">
+    <span appbTranslate="appbillingApp.manager.home.title">Managers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appbTranslate="appbillingApp.manager.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-manager"
+        [routerLink]="['/manager/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appbTranslate="appbillingApp.manager.home.createLabel"> Create a new Manager </span>
+      </button>
+    </div>
+  </h2>
+
+  <appb-alert-error></appb-alert-error>
+
+  <appb-alert></appb-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="managers?.length === 0">
+    <span appbTranslate="appbillingApp.manager.home.notFound">No managers found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="managers && managers.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" appbSortBy="id"><span appbTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" appbSortBy="name">
+            <span appbTranslate="appbillingApp.manager.name">Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" appbSortBy="email">
+            <span appbTranslate="appbillingApp.manager.email">Email</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" appbSortBy="phoneNumber">
+            <span appbTranslate="appbillingApp.manager.phoneNumber">Phone Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" appbSortBy="statusClient">
+            <span appbTranslate="appbillingApp.manager.statusClient">Status Client</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" appbSortBy="user.login">
+            <span appbTranslate="appbillingApp.manager.user">User</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let manager of managers; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/manager', manager.id, 'view']">{{ manager.id }}</a>
+          </td>
+          <td>{{ manager.name }}</td>
+          <td>{{ manager.email }}</td>
+          <td>{{ manager.phoneNumber }}</td>
+          <td appbTranslate="{{ 'appbillingApp.State.' + manager.statusClient }}">{{ manager.statusClient }}</td>
+          <td>
+            {{ manager.user?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/manager', manager.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appbTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/manager', manager.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appbTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(manager)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appbTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="managers && managers.length > 0">
+    <div class="d-flex justify-content-center">
+      <appb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></appb-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

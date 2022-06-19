@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="contract">
+      <h2 data-cy="contractDetailsHeading"><span appbTranslate="appbillingApp.contract.detail.title">Contract</span></h2>
+
+      <hr />
+
+      <appb-alert-error></appb-alert-error>
+
+      <appb-alert></appb-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appbTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ contract.id }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.contract.dataInit">Data Init</span></dt>
+        <dd>
+          <span>{{ contract.dataInit | formatMediumDate }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.contract.dataFinal">Data Final</span></dt>
+        <dd>
+          <span>{{ contract.dataFinal | formatMediumDate }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.contract.contractTerm">Contract Term</span></dt>
+        <dd>
+          <span>{{ contract.contractTerm }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.contract.contractValue">Contract Value</span></dt>
+        <dd>
+          <span>{{ contract.contractValue }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.contract.statecontract">Statecontract</span></dt>
+        <dd>
+          <span appbTranslate="{{ 'appbillingApp.State.' + contract.statecontract }}">{{ contract.statecontract }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.contract.customer">Customer</span></dt>
+        <dd>
+          <div *ngIf="contract.customer">
+            <a [routerLink]="['/customer', contract.customer?.id, 'view']">{{ contract.customer?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appbTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/contract', contract.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appbTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

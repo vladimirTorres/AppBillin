@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="manager">
+      <h2 data-cy="managerDetailsHeading"><span appbTranslate="appbillingApp.manager.detail.title">Manager</span></h2>
+
+      <hr />
+
+      <appb-alert-error></appb-alert-error>
+
+      <appb-alert></appb-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appbTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ manager.id }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.manager.name">Name</span></dt>
+        <dd>
+          <span>{{ manager.name }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.manager.email">Email</span></dt>
+        <dd>
+          <span>{{ manager.email }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.manager.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ manager.phoneNumber }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.manager.statusClient">Status Client</span></dt>
+        <dd>
+          <span appbTranslate="{{ 'appbillingApp.State.' + manager.statusClient }}">{{ manager.statusClient }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.manager.user">User</span></dt>
+        <dd>
+          <span>{{ manager.user?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appbTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/manager', manager.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appbTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

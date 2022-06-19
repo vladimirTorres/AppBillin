@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="customer">
+      <h2 data-cy="customerDetailsHeading"><span appbTranslate="appbillingApp.customer.detail.title">Customer</span></h2>
+
+      <hr />
+
+      <appb-alert-error></appb-alert-error>
+
+      <appb-alert></appb-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appbTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ customer.id }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.customer.socialReason">Social Reason</span></dt>
+        <dd>
+          <span>{{ customer.socialReason }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.customer.nameContact">Name Contact</span></dt>
+        <dd>
+          <span>{{ customer.nameContact }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.customer.email">Email</span></dt>
+        <dd>
+          <span>{{ customer.email }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.customer.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ customer.phoneNumber }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.customer.statusClient">Status Client</span></dt>
+        <dd>
+          <span appbTranslate="{{ 'appbillingApp.State.' + customer.statusClient }}">{{ customer.statusClient }}</span>
+        </dd>
+        <dt><span appbTranslate="appbillingApp.customer.user">User</span></dt>
+        <dd>
+          <span>{{ customer.user?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appbTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/customer', customer.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appbTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
